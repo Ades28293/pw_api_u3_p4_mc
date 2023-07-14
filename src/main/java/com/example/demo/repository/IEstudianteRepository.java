@@ -8,6 +8,8 @@ public interface IEstudianteRepository {
 	
 	public Estudiante seleccionarPorCedula(String cedula);
 	
+	public Estudiante buscarPorId(Integer id);
+	
 	public void insertar(Estudiante estudiante);
 	
 	public void actualizar(Estudiante estudiante);
@@ -16,6 +18,9 @@ public interface IEstudianteRepository {
 	
 	public void borrar(Integer id);
 	
-	public List<Estudiante> buscarTodos();
+	public List<Estudiante> buscarTodos(String provincia);
+	
+	public List<Estudiante> buscarTodosNormal();
+	
 
 }

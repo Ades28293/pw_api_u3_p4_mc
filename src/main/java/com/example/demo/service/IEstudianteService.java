@@ -7,6 +7,8 @@ import com.example.demo.modelo.Estudiante;
 public interface IEstudianteService {
 	
 	public Estudiante consultarCedula(String cedula);
+	
+	public Estudiante consultarPorId(Integer id);
 
 	public void guardar(Estudiante estudiante);
 	
@@ -14,5 +16,6 @@ public interface IEstudianteService {
 	
 	public void eliminar(Integer id);
 	
-	public List<Estudiante> buscarTodos();
+	public List<Estudiante> consultarTodos(String provincia);
+	public List<Estudiante> buscarTodosNormal();
 }

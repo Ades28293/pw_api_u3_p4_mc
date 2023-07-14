@@ -43,9 +43,16 @@ public class EstudianteControllerRestFul {
 	}
 	
 	@GetMapping(path = "/buscarTodos")
-	public List<Estudiante> buscarTodos(@RequestParam String provincia){
+	public List<Estudiante> consultartTodos(@RequestParam String provincia){
 		//buscarTodos?Provincia=provincia
-		return this.estudianteService.buscarTodos();	}
+		return this.estudianteService.consultarTodos(provincia);
+		}
+	
+	@GetMapping(path = "/buscarTodosNormal")
+	public List<Estudiante> consultartTodosTest(){
+
+		return this.estudianteService.buscarTodosNormal();
+		}
 	
 	
 	@PostMapping(path ="/guardar" )
@@ -64,12 +71,11 @@ public class EstudianteControllerRestFul {
 	@PatchMapping(path = "/actualizarParcial/{identificador}" )
 	public void actualizarParcial(@RequestBody Estudiante estudiante,@PathVariable Integer identificador) {
 		//solo se envia la cedula xq ese parametro le quiero actualizar para esto debemos hacer
-		estudiante.setId(identificador);		
-		String cedula="1720757101";
-		Estudiante estu1=this.estudianteService.consultarCedula(cedula);
+		
+		Estudiante estu1=this.estudianteService.consultarPorId(identificador);
 		estu1.setCedula(estudiante.getCedula());
 		
-		this.estudianteService.actualizar(estudiante);
+		this.estudianteService.actualizar(estu1);
 		
 	}
 	
