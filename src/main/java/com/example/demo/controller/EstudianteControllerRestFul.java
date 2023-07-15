@@ -37,38 +37,40 @@ public class EstudianteControllerRestFul {
 	//debemos tener una api para cada dominio especifico ejemplo api tranferencia
 	//microservisio con dominio especifico y ese nombre debe tener un nombre debemos ponerle
 	//en le path
-	@GetMapping(path = "/buscar/{cedula}")
+	@GetMapping(path = "/{cedula}")
 	public Estudiante consultarPorCedula(@PathVariable String cedula) {
 		return this.estudianteService.consultarCedula(cedula);
 	}
 	
-	@GetMapping(path = "/buscarTodos")
+	@GetMapping
 	public List<Estudiante> consultartTodos(@RequestParam String provincia){
+		//Request variable seleccionar un conjunto por medio de un criterio
 		//buscarTodos?Provincia=provincia
 		return this.estudianteService.consultarTodos(provincia);
 		}
 	
-	@GetMapping(path = "/buscarTodosNormal")
-	public List<Estudiante> consultartTodosTest(){
-
-		return this.estudianteService.buscarTodosNormal();
-		}
+//	@GetMapping
+//	public List<Estudiante> consultartTodosTest(){
+//
+//		return this.estudianteService.buscarTodosNormal();
+//		}
 	
 	
-	@PostMapping(path ="/guardar" )
+	@PostMapping
 	public void guardar(@RequestBody Estudiante estudiante) { 
 		//tiene estudiante reciba un estudiante ya necesitamos para guardar
 		//dentro del request debe venir el estudiante debemos poner la anotación @RequestBody
 		this.estudianteService.guardar(estudiante);
 	}
 	
-	@PutMapping(path = "/actualizar/{identificador}")
+	//request pathvariable un identificador y debe estar puesto la anatocacion en el los parametros
+	@PutMapping(path = "/{identificador}")
 	public void actualizar(@RequestBody Estudiante estudiante,@PathVariable Integer identificador ) {
 		estudiante.setId(identificador);		
 		this.estudianteService.actualizar(estudiante);
 	}
 	
-	@PatchMapping(path = "/actualizarParcial/{identificador}" )
+	@PatchMapping(path = "/{identificador}" )
 	public void actualizarParcial(@RequestBody Estudiante estudiante,@PathVariable Integer identificador) {
 		//solo se envia la cedula xq ese parametro le quiero actualizar para esto debemos hacer
 		
@@ -79,7 +81,7 @@ public class EstudianteControllerRestFul {
 		
 	}
 	
-	@DeleteMapping(path = "/borrar/{id}")
+	@DeleteMapping(path = "/{id}")
 	public void borrar(@PathVariable Integer id) {
 		
 		this.estudianteService.eliminar(id);
