@@ -19,7 +19,21 @@ public class EstudianteServiceImpl implements IEstudianteService{
 		// TODO Auto-generated method stub
 		return this.estudianteRepository.seleccionarPorCedula(cedula);
 	}
+	
+	@Override
+	public Estudiante consultarPorId(Integer id) {
+		// TODO Auto-generated method stub
+		return this.estudianteRepository.buscarPorId(id);
+	}
 
+	@Override
+	public List<Estudiante> consultarTodos(String provincia) {
+		// TODO Auto-generated method stub
+	return this.estudianteRepository.buscarTodos(provincia);
+		
+	}
+
+	
 	@Override
 	public void guardar(Estudiante estudiante) {
 		// TODO Auto-generated method stub
@@ -38,23 +52,9 @@ public class EstudianteServiceImpl implements IEstudianteService{
 		this.estudianteRepository.borrar(id);
 	}
 
-	@Override
-	public List<Estudiante> consultarTodos(String provincia) {
-		// TODO Auto-generated method stub
-	return this.estudianteRepository.buscarTodos(provincia);
-		
-	}
+	
+	
 
-	@Override
-	public Estudiante consultarPorId(Integer id) {
-		// TODO Auto-generated method stub
-		return this.estudianteRepository.buscarPorId(id);
-	}
-
-	@Override
-	public List<Estudiante> buscarTodosNormal() {
-		// TODO Auto-generated method stub
-		return this.estudianteRepository.buscarTodosNormal();
-	}
+	
 
 }

@@ -49,12 +49,7 @@ public class EstudianteControllerRestFul {
 		return this.estudianteService.consultarTodos(provincia);
 		}
 	
-//	@GetMapping
-//	public List<Estudiante> consultartTodosTest(){
-//
-//		return this.estudianteService.buscarTodosNormal();
-//		}
-	
+
 	
 	@PostMapping
 	public void guardar(@RequestBody Estudiante estudiante) { 

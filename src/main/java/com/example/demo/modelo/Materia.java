@@ -27,6 +27,9 @@ public class Materia {
 	@Column(name = "mate_numero_creditos")
 	private Integer numeroCreditos;
 	
+	@Column(name="mate_tipo")
+	private String tipo;
+	
 	
 	//Set y Get
 
@@ -60,6 +63,14 @@ public class Materia {
 
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	
