@@ -3,6 +3,10 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -38,15 +42,33 @@ public class EstudianteControllerRestFul {
 	//microservisio con dominio especifico y ese nombre debe tener un nombre debemos ponerle
 	//en le path
 	@GetMapping(path = "/{cedula}")
-	public Estudiante consultarPorCedula(@PathVariable String cedula) {
-		return this.estudianteService.consultarCedula(cedula);
+	public ResponseEntity<Estudiante>consultarPorCedula(@PathVariable String cedula) {
+		//utilizamos un grapper para volver el objeto Estudiante -ResponseEntity
+	
+		return ResponseEntity.status(227).body(this.estudianteService.consultarCedula(cedula));
+	}
+	
+	@GetMapping(path = "/status/{cedula}")
+	public ResponseEntity<Estudiante>consultarPorCedulaStatus(@PathVariable String cedula) {
+		//utilizamos un grapper para volver el objeto Estudiante -ResponseEntity
+	
+		return ResponseEntity.status(HttpStatus.OK).body(this.estudianteService.consultarCedula(cedula));
 	}
 	
 	@GetMapping
-	public List<Estudiante> consultartTodos(@RequestParam String provincia){
+	public ResponseEntity<List<Estudiante>> consultartTodos(@RequestParam String provincia){
 		//Request variable seleccionar un conjunto por medio de un criterio
 		//buscarTodos?Provincia=provincia
-		return this.estudianteService.consultarTodos(provincia);
+		
+		HttpHeaders cabeceras=new HttpHeaders();
+		
+		//se agrega una lista se puede agregar tantas cabeceras como las necesite
+		//el primer parametro es la clave(id) para buscarle desde el front, el segundo el mensaje
+		cabeceras.add("detalleMensaje", "Ciudadanos consultados exitosamente");
+		cabeceras.add("valorApi", "Incalculable"); 
+		
+		//debo crear una instancia de responseEntity el primer parametro se manda la lista,segundo el mensaje,y el ultimo el codigo
+		return  new ResponseEntity<>(this.estudianteService.consultarTodos(provincia),cabeceras,228);
 		}
 	
 
