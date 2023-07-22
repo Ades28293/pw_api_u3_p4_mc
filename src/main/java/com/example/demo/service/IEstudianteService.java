@@ -12,6 +12,8 @@ public interface IEstudianteService {
 
 	public void guardar(Estudiante estudiante);
 	
+	public Estudiante guardarModificado(Estudiante estudiante);
+	
 	public void actualizar(Estudiante estudiante);
 	
 	public void eliminar(Integer id);

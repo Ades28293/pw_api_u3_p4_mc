@@ -52,6 +52,12 @@ public class EstudianteServiceImpl implements IEstudianteService{
 		this.estudianteRepository.borrar(id);
 	}
 
+	@Override
+	public Estudiante guardarModificado(Estudiante estudiante) {
+		// TODO Auto-generated method stub
+		return this.estudianteRepository.insertarModificado(estudiante);
+	}
+
 	
 	
 

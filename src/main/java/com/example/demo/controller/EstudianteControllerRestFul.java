@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.modelo.Estudiante;
@@ -48,11 +49,20 @@ public class EstudianteControllerRestFul {
 		return ResponseEntity.status(227).body(this.estudianteService.consultarCedula(cedula));
 	}
 	
+	
+//no se debe poner status solo es de ejemplo por el modelo de richarson
 	@GetMapping(path = "/status/{cedula}")
 	public ResponseEntity<Estudiante>consultarPorCedulaStatus(@PathVariable String cedula) {
 		//utilizamos un grapper para volver el objeto Estudiante -ResponseEntity
 	
 		return ResponseEntity.status(HttpStatus.OK).body(this.estudianteService.consultarCedula(cedula));
+	}
+	
+	//no se debe poner status solo es de ejemplo por el modelo de richarson
+	@GetMapping(path = "/status2/{cedula}",produces = MediaType.APPLICATION_XML_VALUE)
+	@ResponseStatus(HttpStatus.OK)//se utiliza para poner un codigo fijo dependiendo del problema que tengo
+	public Estudiante consultarPorCedulaStatus2(@PathVariable String cedula) {
+		return this.estudianteService.consultarCedula(cedula);
 	}
 	
 	@GetMapping
@@ -72,13 +82,23 @@ public class EstudianteControllerRestFul {
 		}
 	
 
+//	
+//	@PostMapping(consumes = "application/xml")
+//	public void guardar(@RequestBody Estudiante estudiante) { 
+//		//tiene estudiante reciba un estudiante ya necesitamos para guardar
+//		//dentro del request debe venir el estudiante debemos poner la anotación @RequestBody
+//		this.estudianteService.guardar(estudiante);
+//	}
 	
-	@PostMapping
-	public void guardar(@RequestBody Estudiante estudiante) { 
+	
+	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
+	public Estudiante guardarModificado(@RequestBody Estudiante estudiante) { 
 		//tiene estudiante reciba un estudiante ya necesitamos para guardar
 		//dentro del request debe venir el estudiante debemos poner la anotación @RequestBody
-		this.estudianteService.guardar(estudiante);
+	return	this.estudianteService.guardarModificado(estudiante);
+		
 	}
+	
 	
 	//request pathvariable un identificador y debe estar puesto la anatocacion en el los parametros
 	@PutMapping(path = "/{identificador}")

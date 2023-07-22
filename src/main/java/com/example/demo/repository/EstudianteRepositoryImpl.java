@@ -81,6 +81,15 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository {
 
 	}
 
+	@Override
+	public Estudiante insertarModificado(Estudiante estudiante) {
+		// TODO Auto-generated method stub
+		this.entityManager.persist(estudiante);
+		this.entityManager.find(Estudiante.class, estudiante.getId());
+		
+		return this.entityManager.find(Estudiante.class, estudiante.getId());
+	}
+
 	
 
 }
