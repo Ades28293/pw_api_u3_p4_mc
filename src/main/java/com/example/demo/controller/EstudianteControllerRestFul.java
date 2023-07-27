@@ -1,8 +1,12 @@
 package com.example.demo.controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.modelo.Estudiante;
 import com.example.demo.service.IEstudianteService;
+import com.example.demo.service.to.EstudianteTO;
+import com.example.demo.service.to.MateriaTO;;
 
 @RestController
 @RequestMapping("/estudiantes")
@@ -80,6 +86,34 @@ public class EstudianteControllerRestFul {
 		//debo crear una instancia de responseEntity el primer parametro se manda la lista,segundo el mensaje,y el ultimo el codigo
 		return  new ResponseEntity<>(this.estudianteService.consultarTodos(provincia),cabeceras,228);
 		}
+	
+	
+	//no se debe poner el el verbo solo un distintivo es para fines practicos
+	@GetMapping(path = "/hateoas")
+	public ResponseEntity<List<EstudianteTO>> consultartTodosHATEOAS(){
+		
+		List<EstudianteTO>lista=this.estudianteService.buscarTodosHATEOAS();
+		
+		//agregamos el link hyper-media
+		for (EstudianteTO e : lista) {
+			//creamos el link
+			//importaciones estaticos importacion manual
+			Link myLink = linkTo(methodOn(EstudianteControllerRestFul.class).buscarPorEstudianteTO(e.getCedula())).withRel("materias");
+
+            e.add(myLink);
+			
+		}
+		
+		return new ResponseEntity<>(lista,null,200);
+		}
+	
+	@GetMapping(path = "/{cedula}/materias")
+	public ResponseEntity<List<MateriaTO>> buscarPorEstudianteTO(@PathVariable Integer Cedula){
+		return null;
+	}
+	
+	
+	
 	
 
 //	

@@ -90,6 +90,15 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository {
 		return this.entityManager.find(Estudiante.class, estudiante.getId());
 	}
 
+	@Override
+	public List<Estudiante> buscarTodosNormal() {
+		// TODO Auto-generated method stub
+		TypedQuery<Estudiante> miQuery = this.entityManager
+				.createQuery("SELECT e FROM Estudiante e ", Estudiante.class);
+
+		return miQuery.getResultList();
+	}
+
 	
 
 }
