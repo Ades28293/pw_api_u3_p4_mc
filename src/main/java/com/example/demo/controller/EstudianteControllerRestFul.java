@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -31,6 +32,7 @@ import com.example.demo.service.to.MateriaTO;
 
 @RestController
 @RequestMapping("/estudiantes")
+@CrossOrigin
 public class EstudianteControllerRestFul {
 	/*decimos al contenedor que va hacer un controller res atraves de este esteoriotipo
 	Recibe a traves de la url mediante request o mas conocido como path a nivel de recurso atravez del 
@@ -115,7 +117,7 @@ public class EstudianteControllerRestFul {
 		List<MateriaTO> lista = this.iMateriaService.buscarPorCedulaEstudiante(cedula);
 		for (MateriaTO mat : lista) {
 			Link myLink = linkTo(methodOn(MateriaControllerRestFul.class).consultarPorId(mat.getId()))
-					.withRel("materia");
+					.withSelfRel();
 			mat.add(myLink);
 		}
 		
