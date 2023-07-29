@@ -59,33 +59,30 @@ public class EstudianteServiceImpl implements IEstudianteService{
 		// TODO Auto-generated method stub
 		return this.estudianteRepository.insertarModificado(estudiante);
 	}
-
+	
 	@Override
-	public List<EstudianteTO> buscarTodosHATEOAS() {
+	public List<EstudianteTO> buscarTodosNormal() {
 		// TODO Auto-generated method stub
 		List<Estudiante> lista=this.estudianteRepository.buscarTodosNormal();
 		List<EstudianteTO>listaTO=lista.stream().map(estudiante->this.convertir(estudiante)).collect(Collectors.toList());
 		
 		return listaTO;
 	}
+
 	
 	private EstudianteTO convertir(Estudiante estudiante) {
-		EstudianteTO est=new EstudianteTO();
+		EstudianteTO est= new EstudianteTO();
 		est.setId(estudiante.getId());
+		est.setNombre(estudiante.getNombre());
 		est.setApellido(estudiante.getApellido());
 		est.setCedula(estudiante.getCedula());
 		est.setFechaNacimiento(estudiante.getFechaNacimiento());
-		est.setNombre(estudiante.getNombre());
 		est.setProvincia(estudiante.getProvincia());
+
 		return est;
 	}
 
-	@Override
-	public List<Estudiante> buscarTodosNormal() {
-		// TODO Auto-generated method stub
-		return this.estudianteRepository.buscarTodosNormal();
-	}
-
+	
 	
 	
 

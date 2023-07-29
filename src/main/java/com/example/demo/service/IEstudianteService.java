@@ -21,8 +21,8 @@ public interface IEstudianteService {
 	
 	public List<Estudiante> consultarTodos(String provincia);
 	
-	public List<Estudiante> buscarTodosNormal();
+	public List<EstudianteTO> buscarTodosNormal();
 	
-	public List<EstudianteTO> buscarTodosHATEOAS();
+
 	
 }

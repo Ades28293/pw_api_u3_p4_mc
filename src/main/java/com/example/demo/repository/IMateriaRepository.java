@@ -20,6 +20,8 @@ public interface IMateriaRepository {
 	
 	public void borrar(Integer id);
 	
+	public List<Materia> buscarPorCedulaEstudiante(String cedula);
+	
 	
 
 }

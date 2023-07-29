@@ -11,7 +11,7 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO> implements S
 
 	private Integer id;
 
-	private Integer cedula;
+	private String cedula;
 
 	private String nombre;
 
@@ -29,11 +29,11 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO> implements S
 		this.id = id;
 	}
 
-	public Integer getCedula() {
+	public String getCedula() {
 		return cedula;
 	}
 
-	public void setCedula(Integer cedula) {
+	public void setCedula(String cedula) {
 		this.cedula = cedula;
 	}
 

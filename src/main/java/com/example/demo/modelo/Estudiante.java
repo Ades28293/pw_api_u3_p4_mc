@@ -1,12 +1,14 @@
 package com.example.demo.modelo;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -20,7 +22,7 @@ public class Estudiante {
 	private Integer id;
 	
 	@Column(name = "estu_cedula")
-	private Integer cedula;
+	private String cedula;
 	
 	@Column(name = "estu_nombre")
 	private String nombre;
@@ -33,6 +35,9 @@ public class Estudiante {
 	
 	@Column(name = "estu_provincia")
 	private String provincia;
+	
+	@OneToMany(mappedBy = "estudiante")
+	private List<Materia>materias;
 
 	
 	//set y get 
@@ -44,11 +49,11 @@ public class Estudiante {
 		this.id = id;
 	}
 
-	public Integer getCedula() {
+	public String getCedula() {
 		return cedula;
 	}
 
-	public void setCedula(Integer cedula) {
+	public void setCedula(String cedula) {
 		this.cedula = cedula;
 	}
 
@@ -82,6 +87,14 @@ public class Estudiante {
 
 	public void setProvincia(String provincia) {
 		this.provincia = provincia;
+	}
+
+	public List<Materia> getMaterias() {
+		return materias;
+	}
+
+	public void setMaterias(List<Materia> materias) {
+		this.materias = materias;
 	}
 	
 	

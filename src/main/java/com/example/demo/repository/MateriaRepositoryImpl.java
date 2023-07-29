@@ -76,6 +76,14 @@ public class MateriaRepositoryImpl implements IMateriaRepository{
 		// TODO Auto-generated method stub
 		this.entityManager.remove(this.buscarPorId(id));
 	}
+	
+	@Override
+	public List<Materia> buscarPorCedulaEstudiante(String cedula) {
+		// TODO Auto-generated method stub
+		TypedQuery<Materia> myQ=this.entityManager.createQuery("SELECT m FROM Materia m WHERE m.estudiante.cedula =: datoEstudiante", Materia.class);
+		myQ.setParameter("datoEstudiante", cedula);
+		return myQ.getResultList();
+	}
 
 	
 

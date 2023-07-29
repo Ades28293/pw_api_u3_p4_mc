@@ -25,8 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.modelo.Estudiante;
 import com.example.demo.service.IEstudianteService;
+import com.example.demo.service.IMateriaService;
 import com.example.demo.service.to.EstudianteTO;
-import com.example.demo.service.to.MateriaTO;;
+import com.example.demo.service.to.MateriaTO;
 
 @RestController
 @RequestMapping("/estudiantes")
@@ -40,6 +41,9 @@ public class EstudianteControllerRestFul {
 	//inyectamos el service para poder ocupar sus metodos
 	@Autowired
 	private IEstudianteService estudianteService;
+	
+	@Autowired
+	private IMateriaService iMateriaService;
 	
 	//el metodo debeG tener una direccion y debe estar instanciado el verbo ejemplo GET
 	//anotacion GetMapping
@@ -89,27 +93,33 @@ public class EstudianteControllerRestFul {
 	
 	
 	//no se debe poner el el verbo solo un distintivo es para fines practicos
-	@GetMapping(path = "/hateoas")
+	@GetMapping(path = "/hateoas", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<EstudianteTO>> consultartTodosHATEOAS(){
 		
-		List<EstudianteTO>lista=this.estudianteService.buscarTodosHATEOAS();
+		List<EstudianteTO>lista=this.estudianteService.buscarTodosNormal();
 		
 		//agregamos el link hyper-media
 		for (EstudianteTO e : lista) {
 			//creamos el link
 			//importaciones estaticos importacion manual
-			Link myLink = linkTo(methodOn(EstudianteControllerRestFul.class).buscarPorEstudianteTO(e.getCedula())).withRel("materias");
+			Link mylink=linkTo(methodOn(EstudianteControllerRestFul.class).buscarPorEstudianteTO(e.getCedula())).withRel("materias");
+			e.add(mylink);
 
-            e.add(myLink);
-			
 		}
 		
 		return new ResponseEntity<>(lista,null,200);
 		}
 	
-	@GetMapping(path = "/{cedula}/materias")
-	public ResponseEntity<List<MateriaTO>> buscarPorEstudianteTO(@PathVariable Integer Cedula){
-		return null;
+	@GetMapping(path = "/{cedula}/materias", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<MateriaTO>> buscarPorEstudianteTO(@PathVariable String cedula){
+		List<MateriaTO> lista = this.iMateriaService.buscarPorCedulaEstudiante(cedula);
+		for (MateriaTO mat : lista) {
+			Link myLink = linkTo(methodOn(MateriaControllerRestFul.class).consultarPorId(mat.getId()))
+					.withRel("materia");
+			mat.add(myLink);
+		}
+		
+		return new ResponseEntity<>(lista, null, 200);
 	}
 	
 	
