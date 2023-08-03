@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -24,6 +25,7 @@ import com.example.demo.service.IEstudianteService;
 
 @RestController
 @RequestMapping("/estudiantes")
+@CrossOrigin
 public class EstudianteControllerRestFul {
 	/*decimos al contenedor que va hacer un controller res atraves de este esteoriotipo
 	Recibe a traves de la url mediante request o mas conocido como path a nivel de recurso atravez del 
@@ -82,26 +84,26 @@ public class EstudianteControllerRestFul {
 		}
 	
 
-//	
-//	@PostMapping(consumes = "application/xml")
-//	public void guardar(@RequestBody Estudiante estudiante) { 
-//		//tiene estudiante reciba un estudiante ya necesitamos para guardar
-//		//dentro del request debe venir el estudiante debemos poner la anotación @RequestBody
-//		this.estudianteService.guardar(estudiante);
-//	}
+	
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void guardar(@RequestBody Estudiante estudiante) { 
+		//tiene estudiante reciba un estudiante ya necesitamos para guardar
+		//dentro del request debe venir el estudiante debemos poner la anotación @RequestBody
+		this.estudianteService.guardar(estudiante);
+	}
 	
 	
-	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
+/*	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Estudiante guardarModificado(@RequestBody Estudiante estudiante) { 
 		//tiene estudiante reciba un estudiante ya necesitamos para guardar
 		//dentro del request debe venir el estudiante debemos poner la anotación @RequestBody
 	return	this.estudianteService.guardarModificado(estudiante);
 		
 	}
-	
+	*/
 	
 	//request pathvariable un identificador y debe estar puesto la anatocacion en el los parametros
-	@PutMapping(path = "/{identificador}")
+	@PutMapping(path = "/{identificador}",consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void actualizar(@RequestBody Estudiante estudiante,@PathVariable Integer identificador ) {
 		estudiante.setId(identificador);		
 		this.estudianteService.actualizar(estudiante);

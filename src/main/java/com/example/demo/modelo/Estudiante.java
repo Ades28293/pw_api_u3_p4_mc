@@ -33,6 +33,8 @@ public class Estudiante {
 	
 	@Column(name = "estu_provincia")
 	private String provincia;
+	
+
 
 	
 	//set y get 
@@ -83,6 +85,8 @@ public class Estudiante {
 	public void setProvincia(String provincia) {
 		this.provincia = provincia;
 	}
+
+	
 	
 	
 	
