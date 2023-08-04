@@ -44,9 +44,6 @@ public class EstudianteControllerRestFul {
 	@Autowired
 	private IEstudianteService estudianteService;
 	
-	@Autowired
-	private IMateriaService iMateriaService;
-	
 	//el metodo debeG tener una direccion y debe estar instanciado el verbo ejemplo GET
 	//anotacion GetMapping
 	
@@ -93,61 +90,27 @@ public class EstudianteControllerRestFul {
 		return  new ResponseEntity<>(this.estudianteService.consultarTodos(provincia),cabeceras,228);
 		}
 	
-	
-	//no se debe poner el el verbo solo un distintivo es para fines practicos
-	@GetMapping(path = "/hateoas", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<EstudianteTO>> consultartTodosHATEOAS(){
-		
-		List<EstudianteTO>lista=this.estudianteService.buscarTodosNormal();
-		
-		//agregamos el link hyper-media
-		for (EstudianteTO e : lista) {
-			//creamos el link
-			//importaciones estaticos importacion manual
-			Link mylink=linkTo(methodOn(EstudianteControllerRestFul.class).buscarPorEstudianteTO(e.getCedula())).withRel("materias");
-			e.add(mylink);
 
-		}
-		
-		return new ResponseEntity<>(lista,null,200);
-		}
 	
-	@GetMapping(path = "/{cedula}/materias", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<MateriaTO>> buscarPorEstudianteTO(@PathVariable String cedula){
-		List<MateriaTO> lista = this.iMateriaService.buscarPorCedulaEstudiante(cedula);
-		for (MateriaTO mat : lista) {
-			Link myLink = linkTo(methodOn(MateriaControllerRestFul.class).consultarPorId(mat.getId()))
-					.withSelfRel();
-			mat.add(myLink);
-		}
-		
-		return new ResponseEntity<>(lista, null, 200);
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void guardar(@RequestBody Estudiante estudiante) { 
+		//tiene estudiante reciba un estudiante ya necesitamos para guardar
+		//dentro del request debe venir el estudiante debemos poner la anotación @RequestBody
+		this.estudianteService.guardar(estudiante);
 	}
 	
 	
-	
-	
-
-//	
-//	@PostMapping(consumes = "application/xml")
-//	public void guardar(@RequestBody Estudiante estudiante) { 
-//		//tiene estudiante reciba un estudiante ya necesitamos para guardar
-//		//dentro del request debe venir el estudiante debemos poner la anotación @RequestBody
-//		this.estudianteService.guardar(estudiante);
-//	}
-	
-	
-	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
+/*	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Estudiante guardarModificado(@RequestBody Estudiante estudiante) { 
 		//tiene estudiante reciba un estudiante ya necesitamos para guardar
 		//dentro del request debe venir el estudiante debemos poner la anotación @RequestBody
 	return	this.estudianteService.guardarModificado(estudiante);
 		
 	}
-	
+	*/
 	
 	//request pathvariable un identificador y debe estar puesto la anatocacion en el los parametros
-	@PutMapping(path = "/{identificador}")
+	@PutMapping(path = "/{identificador}",consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void actualizar(@RequestBody Estudiante estudiante,@PathVariable Integer identificador ) {
 		estudiante.setId(identificador);		
 		this.estudianteService.actualizar(estudiante);
@@ -170,6 +133,11 @@ public class EstudianteControllerRestFul {
 		this.estudianteService.eliminar(id);
 		
 	}
+	
+	
+	
+	
+	
 	
 	
 	
